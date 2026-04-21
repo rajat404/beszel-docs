@@ -2,13 +2,13 @@
 
 Beszel 从 `smartctl` 解析 S.M.A.R.T. 数据，并在系统页面上显示（如果可用）。这通常需要提升权限。
 
-如果配置了至少一个通知频道，且磁盘向 Beszel 报告 S.M.A.R.T. 数据，则发生故障时会自动触发通知。此行为目前不可配置。注意：如果驱动器在 Beszel 代理首次检测时已报告故障，则不会触发警报。
+在 Linux 上，Beszel 还会报告 eMMC 损耗/寿命终结 指标以及 mdraid 阵列的健康状况。
 
-::: tip Linux sysfs 额外支持
-在 Linux 上，Beszel 还会通过 sysfs 读取 eMMC 的磨损/寿命状态以及 mdraid 阵列健康信息。这些不需要 `smartctl`，但其他磁盘仍需要。
-:::
+## 要求
 
-要确保你的系统兼容，请在代理机器上安装 `smartmontools` 并扫描设备： {#install}
+支持的 `smartctl` 最低版本为 7.0。
+
+要确保你的系统兼容，请在代理机器上安装 `smartmontools`，检查版本并扫描设备： {#install}
 
 ::: code-group
 
@@ -33,6 +33,10 @@ brew install smartmontools
 ```
 
 :::
+
+```bash
+smartctl -v | head -1
+```
 
 ```bash
 sudo smartctl --scan
@@ -286,3 +290,9 @@ sudo rm /etc/udev/rules.d/99-smartctl-disk-group.rules
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
+
+## 警报
+
+如果配置了至少一个通知频道，且磁盘向 Beszel 报告 S.M.A.R.T. 数据，则发生故障时会自动触发通知。此行为目前不可配置。
+
+注意：如果驱动器在 Beszel 代理首次检测时已报告故障，则不会触发警报。

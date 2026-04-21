@@ -2,13 +2,13 @@
 
 Beszel parses S.M.A.R.T. data from `smartctl` and displays it on the system page if available. This usually requires increased permissions.
 
-If at least one notification channel is configured and disks report S.M.A.R.T. data to Beszel, a failure automatically triggers a notification. This behaviour is not currently configurable. Note: If a drive is already reporting failure on first detection by the Beszel agent, no alert will fire.
+On Linux, Beszel also reports eMMC wear/EOL indicators and mdraid array health.
 
-::: tip Linux sysfs extras
-On Linux, Beszel also reads eMMC wear/EOL indicators and mdraid array health from sysfs. These do not require `smartctl`, but other disks still do.
-:::
+## Requirements
 
-To make sure your system is compatible, install `smartmontools` on the agent machine and scan for devices: {#install}
+The minimum supported `smartctl` version is 7.0.
+
+To make sure your system is compatible, install `smartmontools` on the agent machine, check your version, and scan for devices: {#install}
 
 ::: code-group
 
@@ -35,8 +35,13 @@ brew install smartmontools
 :::
 
 ```bash
+smartctl -v | head -1
+```
+
+```bash
 sudo smartctl --scan
 ```
+
 
 ## Docker agent
 
@@ -286,3 +291,9 @@ sudo rm /etc/udev/rules.d/99-smartctl-disk-group.rules
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
+
+## Alerts
+
+If at least one notification channel is configured and disks report S.M.A.R.T. data to Beszel, a failure automatically triggers a notification. This behaviour is not currently configurable. 
+
+Note that if a drive is already reporting failure on first detection by the Beszel agent, no alert will fire.
