@@ -128,6 +128,10 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
 							text: "Mobile Applications",
 							link: "/third-party-integrations/mobile-apps",
 						},
+						{
+							text: "Other",
+							link: "/third-party-integrations/other",
+						},
 					],
 				},
 			],

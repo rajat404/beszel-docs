@@ -154,6 +154,10 @@ function sidebarGuide(): DefaultTheme.SidebarItem[] {
               text: "移动端应用",
               link: "/third-party-integrations/mobile-apps",
             },
+            {
+              text: "其他",
+              link: "/third-party-integrations/other",
+            },
           ],
         },
       ],
